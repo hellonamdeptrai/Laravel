@@ -56,7 +56,7 @@
                 <!-- Display Validation Errors -->
 
             <!-- New Task Form -->
-                <form action="{{ url('task')}}" method="POST" class="form-horizontal">
+                <form action="{{ url('tasks')}}" method="POST" class="form-horizontal">
                 {{ csrf_field() }}
 
                 <!-- Task Name -->
@@ -64,7 +64,7 @@
                         <label for="task-name" class="col-sm-3 control-label">Tên công việc</label>
 
                         <div class="col-sm-6">
-                            <input type="text" name="name" id="task-name" class="form-control" value="{{ old('task') }}">
+                            <input type="text" name="name" id="task-name" class="form-control" value="{{ old('tasks') }}">
                         </div>
                     </div>
 
@@ -97,13 +97,13 @@
                         <td class="table-text"><div>Làm bài tập Laravel </div></td>
                         <!-- Task Complete Button -->
                         <td>
-                            <a href="{{ route('todo.task.complete') }}" type="submit" class="btn btn-success">
+                            <a href="{{ route('todo.tasks.complete') }}" type="submit" class="btn btn-success">
                                 <i class="fa fa-btn fa-check"></i>Hoàn thành
                             </a>
                         </td>
                         <!-- Task Delete Button -->
                         <td>
-                            <form action="{{ url('task/1') }}" method="POST">
+                            <form action="{{ url('tasks/1') }}" method="POST">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 
@@ -117,13 +117,13 @@
                         <td class="table-text"><div>Làm bài tập PHP  </div></td>
                         <!-- Task Complete Button -->
                         <td>
-                            <a href="{{ route('todo.task.complete') }}" type="submit" class="btn btn-success">
+                            <a href="{{ route('todo.tasks.complete') }}" type="submit" class="btn btn-success">
                                 <i class="fa fa-btn fa-check"></i>Hoàn thành
                             </a>
                         </td>
                         <!-- Task Delete Button -->
                         <td>
-                            <form action="{{ url('task/2') }}" method="POST">
+                            <form action="{{ url('tasks/2') }}" method="POST">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 
@@ -137,13 +137,13 @@
                         <td class="table-text"><div><strike>Làm project Laravel </strike></div></td>
                         <!-- Task Complete Button -->
                         <td>
-                            <a href="{{ route('todo.task.reset') }}" type="submit" class="btn btn-success">
+                            <a href="{{ route('todo.tasks.reset') }}" type="submit" class="btn btn-success">
                                 <i class="fa fa-btn fa-refresh"></i>Làm lại
                             </a>
                         </td>
                         <!-- Task Delete Button -->
                         <td>
-                            <form action="{{ url('task/3') }}" method="POST">
+                            <form action="{{ url('tasks/3') }}" method="POST">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 

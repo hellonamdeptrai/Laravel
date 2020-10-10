@@ -17,6 +17,14 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/hello1', function () {
+    return view('hello1');
+});
+
+Route::get('/hello2', function () {
+    return view('hello2');
+});
+
 // Route::post('/save', function () {
 //     echo "hello";
 // });
@@ -76,21 +84,106 @@ Route::group([
 
 
 
-//Route::get('/task/complete/3', function (){
+//Route::get('/tasks/complete/3', function (){
 //    echo "Hoàn thành làm bài tập.";
-//})->name('todo.task.complete');
+//})->name('todo.tasks.complete');
 //
-//Route::get('/task/reset/3', function (){
+//Route::get('/tasks/reset/3', function (){
 //    echo "Làm lại project laravel.";
-//})->name('todo.task.reset');
+//})->name('todo.tasks.reset');
+
+
+
+//Route::prefix('task')->group(function () {
+//    Route::get('complete/3', function (){
+//        echo "Hoàn thành làm bài tập.";
+//    })->name('todo.tasks.complete');
+//    Route::get('reset/3', function (){
+//        echo "Làm lại project laravel.";
+//    })->name('todo.tasks.reset');
+//});
+
+
+
+
+
+
 
 
 
 Route::prefix('task')->group(function () {
-    Route::get('complete/3', function (){
-        echo "Hoàn thành làm bài tập.";
-    })->name('todo.task.complete');
-    Route::get('reset/3', function (){
-        echo "Làm lại project laravel.";
-    })->name('todo.task.reset');
+    Route::get('edit', function (){
+        $name = "hoc lap trinh";
+//       return view('tasks.edit', [
+//           'name' => $name
+//       ]);
+//        return view('tasks.edit')->with('name', $name);
+
+        return view('tasks.edit')->with([
+            'name'=>$name
+        ]);
+    })->name('task.edit');
+    Route::get('create', function (){
+        return view('tasks.create');
+    })->name('task.create');
+    Route::get('list', function (){
+
+        return view('tasks.list', [
+           'records' => [
+               1,2,3
+           ],
+            'i'=>2
+       ]);
+    })->name('task.list');
 });
+
+Route::get('thongtincanhan', function (){
+    $hoten = "Lò Tuấn Nam";
+    $namsinh = "2001";
+    $truonghoc = "Học viện nông nghiệp Việt Nam";
+    $gioithieu = '<span class="text-success">Đẹp trai kinh khủng khiêp</span>';
+    $que = "Sơn La";
+    $muctieu = 'Làm việc về web';
+    return view('profile',[
+        'hoten' => $hoten,
+        'namsinh' => $namsinh,
+        'truonghoc' => $truonghoc,
+        'gioithieu' => $gioithieu,
+        'que' => $que,
+        'muctieu' => $muctieu
+    ]);
+});
+
+Route::get('danhsach', function (){
+    $list = [
+        [
+            'name' => 'Học View trong Laravel',
+            'status' => 0
+        ],
+        [
+            'name' => 'Học Route trong Laravel',
+            'status' => 1
+        ],
+        [
+            'name' => 'Làm bài tập View trong Laravel',
+            'status' => -1
+        ]
+    ];
+    return view('list',[
+        'list' => $list
+    ]);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
