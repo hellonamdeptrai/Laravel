@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+//Route::get('/', function () {
+//    return view('home');
+//});
 
 Route::get('/hello1', function () {
     return view('hello1');
@@ -104,39 +104,6 @@ Route::group([
 //});
 
 
-
-
-
-
-
-
-
-Route::prefix('task')->group(function () {
-    Route::get('edit', function (){
-        $name = "hoc lap trinh";
-//       return view('tasks.edit', [
-//           'name' => $name
-//       ]);
-//        return view('tasks.edit')->with('name', $name);
-
-        return view('tasks.edit')->with([
-            'name'=>$name
-        ]);
-    })->name('task.edit');
-    Route::get('create', function (){
-        return view('tasks.create');
-    })->name('task.create');
-    Route::get('list', function (){
-
-        return view('tasks.list', [
-           'records' => [
-               1,2,3
-           ],
-            'i'=>2
-       ]);
-    })->name('task.list');
-});
-
 Route::get('thongtincanhan', function (){
     $hoten = "Lò Tuấn Nam";
     $namsinh = "2001";
@@ -173,7 +140,28 @@ Route::get('danhsach', function (){
         'list' => $list
     ]);
 });
+//use App\Http\Controllers\HomeController;
+//
+//Route::get('/',
+//    [HomeController::class, 'index']
+//);
 
+Route::prefix('task')->group(function () {
+    Route::get('edit',[\App\Http\Controllers\Task\TaskController::class,'edit'])->name('task.edit');
+    Route::get('create', [\App\Http\Controllers\Task\TaskController::class, 'create'])->name('task.create');
+    Route::get('list', [\App\Http\Controllers\Task\TaskController::class, 'index'])->name('task.list');
+});
+
+//Route::prefix('frontend')->group(function () {
+//    Route::get('edit',[\App\Http\Controllers\Task\TaskController::class,'edit']);
+//    Route::get('create', [App\Http\Controllers\Task\TaskController::class, 'create']);
+//    Route::get('list', [\App\Http\Controllers\Task\TaskController::class, 'index']);
+//});
+
+Route::resource('frontend/task', App\Http\Controllers\Frontend\TaskController::class);
+
+Route::get('frontend/task/complete/{id?}', [App\Http\Controllers\Frontend\TaskController::class, 'complete'])->name('task.complete');
+Route::get('frontend/task/recomplete/{id?}', [App\Http\Controllers\Frontend\TaskController::class, 'reComplete'])->name('task.recomplete');
 
 
 
