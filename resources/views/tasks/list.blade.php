@@ -37,10 +37,18 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="task-name" class="col-sm-3 control-label">Mô tả công việc</label>
+
+                        <div class="col-sm-6">
+                            <input type="text" name="content" id="task-name" class="form-control" value="{{ old('tasks') }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="task-name" class="col-sm-3 control-label">Deadline</label>
 
                         <div class="col-sm-6">
-                            <input type="text" name="deadline" id="task-name" class="form-control" value="{{ old('tasks') }}">
+                            <input class="form-control" name="deadline" type="datetime-local" id="example-datetime-local-input">
+{{--                            <input type="text" name="deadline" id="task-name" class="form-control" value="{{ old('tasks') }}">--}}
                         </div>
                     </div>
 
@@ -69,66 +77,88 @@
                     <th>&nbsp;</th>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="table-text"><div>Làm bài tập Laravel </div></td>
-                        <!-- Task Complete Button -->
-                        <td>
-                            <a href="{{ url('frontend/task/complete/1') }}" type="submit" class="btn btn-success">
-                                <i class="fa fa-btn fa-check"></i>Hoàn thành
-                            </a>
-                        </td>
-                        <!-- Task Delete Button -->
-                        <td>
-                            <form action="{{ url('frontend/task/1') }}" method="POST" onsubmit="return confirm('Có chắc chắn bạn muốn xóa?')">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
+                    @foreach($tasks as $task)
+                        <tr>
+                            <td class="table-text"><div>{{ $task->name }} </div></td>
+                            <!-- Task Complete Button -->
+                            <td>
+                                <a href="{{ url('frontend/task/complete/1') }}" type="submit" class="btn btn-success">
+                                    <i class="fa fa-btn fa-check"></i>Hoàn thành
+                                </a>
+                            </td>
+                            <!-- Task Delete Button -->
+                            <td>
+                                <form action="{{ route('task.delete', $task['id']) }}" method="POST" onsubmit="return confirm('Có chắc chắn bạn muốn xóa?')">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
 
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fa fa-btn fa-trash"></i>Xoá
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-text"><div>Làm bài tập PHP  </div></td>
-                        <!-- Task Complete Button -->
-                        <td>
-                            <a href="{{ url('frontend/task/complete/2') }}" type="submit" class="btn btn-success">
-                                <i class="fa fa-btn fa-check"></i>Hoàn thành
-                            </a>
-                        </td>
-                        <!-- Task Delete Button -->
-                        <td>
-                            <form action="{{ url('frontend/task/2') }}" method="POST" onsubmit="return confirm('Có chắc chắn bạn muốn xóa?')">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fa fa-btn fa-trash"></i>Xoá
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+{{--                    <tr>--}}
+{{--                        <td class="table-text"><div>Làm bài tập Laravel </div></td>--}}
+{{--                        <!-- Task Complete Button -->--}}
+{{--                        <td>--}}
+{{--                            <a href="{{ url('frontend/task/complete/1') }}" type="submit" class="btn btn-success">--}}
+{{--                                <i class="fa fa-btn fa-check"></i>Hoàn thành--}}
+{{--                            </a>--}}
+{{--                        </td>--}}
+{{--                        <!-- Task Delete Button -->--}}
+{{--                        <td>--}}
+{{--                            <form action="{{ url('frontend/task/1') }}" method="POST" onsubmit="return confirm('Có chắc chắn bạn muốn xóa?')">--}}
+{{--                                {{ csrf_field() }}--}}
+{{--                                {{ method_field('DELETE') }}--}}
 
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fa fa-btn fa-trash"></i>Xoá
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table-text"><div><strike>Làm project Laravel </strike></div></td>
-                        <!-- Task Complete Button -->
-                        <td>
-                            <a href="{{url('frontend/task/recomplete/1')}}" type="submit" class="btn btn-success">
-                                <i class="fa fa-btn fa-refresh"></i>Làm lại
-                            </a>
-                        </td>
-                        <!-- Task Delete Button -->
-                        <td>
-                            <form action="{{url('frontend/task/3')}}" method="POST" onsubmit="return confirm('Có chắc chắn bạn muốn xóa?')">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
+{{--                                <button type="submit" class="btn btn-danger">--}}
+{{--                                    <i class="fa fa-btn fa-trash"></i>Xoá--}}
+{{--                                </button>--}}
+{{--                            </form>--}}
+{{--                        </td>--}}
+{{--                    </tr>--}}
+{{--                    <tr>--}}
+{{--                        <td class="table-text"><div>Làm bài tập PHP  </div></td>--}}
+{{--                        <!-- Task Complete Button -->--}}
+{{--                        <td>--}}
+{{--                            <a href="{{ url('frontend/task/complete/2') }}" type="submit" class="btn btn-success">--}}
+{{--                                <i class="fa fa-btn fa-check"></i>Hoàn thành--}}
+{{--                            </a>--}}
+{{--                        </td>--}}
+{{--                        <!-- Task Delete Button -->--}}
+{{--                        <td>--}}
+{{--                            <form action="{{ url('frontend/task/2') }}" method="POST" onsubmit="return confirm('Có chắc chắn bạn muốn xóa?')">--}}
+{{--                                {{ csrf_field() }}--}}
+{{--                                {{ method_field('DELETE') }}--}}
 
-                                <button type="submit" class="btn btn-danger">
-                                    <i class="fa fa-btn fa-trash"></i>Xoá
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
+{{--                                <button type="submit" class="btn btn-danger">--}}
+{{--                                    <i class="fa fa-btn fa-trash"></i>Xoá--}}
+{{--                                </button>--}}
+{{--                            </form>--}}
+{{--                        </td>--}}
+{{--                    </tr>--}}
+{{--                    <tr>--}}
+{{--                        <td class="table-text"><div><strike>Làm project Laravel </strike></div></td>--}}
+{{--                        <!-- Task Complete Button -->--}}
+{{--                        <td>--}}
+{{--                            <a href="{{url('frontend/task/recomplete/1')}}" type="submit" class="btn btn-success">--}}
+{{--                                <i class="fa fa-btn fa-refresh"></i>Làm lại--}}
+{{--                            </a>--}}
+{{--                        </td>--}}
+{{--                        <!-- Task Delete Button -->--}}
+{{--                        <td>--}}
+{{--                            <form action="{{url('frontend/task/3')}}" method="POST" onsubmit="return confirm('Có chắc chắn bạn muốn xóa?')">--}}
+{{--                                {{ csrf_field() }}--}}
+{{--                                {{ method_field('DELETE') }}--}}
+
+{{--                                <button type="submit" class="btn btn-danger">--}}
+{{--                                    <i class="fa fa-btn fa-trash"></i>Xoá--}}
+{{--                                </button>--}}
+{{--                            </form>--}}
+{{--                        </td>--}}
+{{--                    </tr>--}}
                     </tbody>
                 </table>
             </div>

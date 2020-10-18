@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -14,11 +15,24 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return view('tasks.list', [
-            'records' => [
-                1,2,3
+        $list = [
+            [
+                'name' => 'Học View trong Laravel',
+                'status' => 0
             ],
-            'i'=>2
+            [
+                'name' => 'Học Route trong Laravel',
+                'status' => 1
+            ],
+            [
+            'name' => 'Làm bài tập View trong Laravel',
+            'status' => -1
+            ],
+        ];
+
+        $tasks = Task::where('status', 1)->get();
+        return view('tasks.list')->with([
+            'tasks' => $tasks
         ]);
     }
 
@@ -41,9 +55,16 @@ class TaskController extends Controller
     public function store(Request $request)
     {
 //        $name = $request -> get('name');
-        $name = $request -> only('deadline', 'name');
-
-        dd($name);
+//        $name = $request -> only('name', 'content','deadline');
+//
+//        dd($name);
+        $task = new Task();
+        $task->name = $request -> get('name');
+        $task->status = 1;
+        $task->content = $request -> get('content');
+        $task->deadline = $request -> get('deadline');
+        $task->save();
+        return redirect()->route('task.list');
     }
 
     /**
@@ -54,7 +75,9 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+//        $task = Task::find($id);
+        $task = Task::where('id', $id)->first();
+        dd($task->name);
     }
 
     /**
@@ -96,7 +119,9 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
+        $task = Task::find($id);
+        $task->delete();
+        return redirect()->route('task.list');
     }
 
 
