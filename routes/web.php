@@ -169,7 +169,10 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('task')->group(function () {
     Route::get('/',[\App\Http\Controllers\Frontend\TaskController::class,'index'])->name('task.list');
     Route::post('/', [\App\Http\Controllers\Frontend\TaskController::class, 'store'])->name('task.store');
-    Route::get('complete/{id}', [\App\Http\Controllers\Frontend\TaskController::class, 'complete'])->name('task.complete');
+    Route::get('create', 'Frontend\TaskController@create')->name('task.create');
+//    Route::match(['put','patch'], 'task/{task}', 'Frontend\TaskController@update')->name('task.update');
+    Route::put('complete/{id}', [\App\Http\Controllers\Frontend\TaskController::class, 'complete'])->name('task.complete');
+    Route::put('recomplete/{id}', [\App\Http\Controllers\Frontend\TaskController::class, 'reComplete'])->name('task.reComplete');
     Route::delete('delete/{id}', [\App\Http\Controllers\Frontend\TaskController::class, 'destroy'])->name('task.delete');
 });
 

@@ -15,24 +15,24 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $list = [
-            [
-                'name' => 'Học View trong Laravel',
-                'status' => 0
-            ],
-            [
-                'name' => 'Học Route trong Laravel',
-                'status' => 1
-            ],
-            [
-            'name' => 'Làm bài tập View trong Laravel',
-            'status' => -1
-            ],
-        ];
+//        $list = [
+//            [
+//                'name' => 'Học View trong Laravel',
+//                'status' => 0
+//            ],
+//            [
+//                'name' => 'Học Route trong Laravel',
+//                'status' => 1
+//            ],
+//            [
+//            'name' => 'Làm bài tập View trong Laravel',
+//            'status' => -1
+//            ],
+//        ];
 
-        $tasks = Task::where('status', 1)->get();
+        $tasks = Task::get();
         return view('tasks.list')->with([
-            'tasks' => $tasks
+            'tasks'=>$tasks
         ]);
     }
 
@@ -60,6 +60,7 @@ class TaskController extends Controller
 //        dd($name);
         $task = new Task();
         $task->name = $request -> get('name');
+        $task->priority = $request -> get('priority');
         $task->status = 1;
         $task->content = $request -> get('content');
         $task->deadline = $request -> get('deadline');
@@ -130,11 +131,17 @@ class TaskController extends Controller
 
     public function complete($id)
     {
-        dd($id);
+        $task = Task::find($id);
+        $task->status = 2;
+        $task->save();
+        return redirect()->route('task.list');
     }
 
     public function reComplete($id)
     {
-        dd($id);
+        $task = Task::find($id);
+        $task->status = -1;
+        $task->save();
+        return redirect()->route('task.list');
     }
 }

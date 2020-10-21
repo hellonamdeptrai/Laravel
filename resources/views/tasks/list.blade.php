@@ -48,10 +48,19 @@
 
                         <div class="col-sm-6">
                             <input class="form-control" name="deadline" type="datetime-local" id="example-datetime-local-input">
-{{--                            <input type="text" name="deadline" id="task-name" class="form-control" value="{{ old('tasks') }}">--}}
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="task-name" class="col-sm-3 control-label">Mức độ ưu tiên</label>
 
+                        <div class="col-sm-6">
+                            <select name="priority" class="form-control" id="exampleFormControlSelect1">
+                                <option value="0">Bình thường</option>
+                                <option value="1">Quan trọng</option>
+                                <option value="2">Khẩn cấp</option>
+                            </select>
+                        </div>
+                    </div>
                     <!-- Add Task Button -->
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-6">
@@ -74,17 +83,60 @@
                 <table class="table table-striped task-table">
                     <thead>
                     <th>Tên công việc</th>
-                    <th>&nbsp;</th>
+                    <th>Tên công việc</th>
                     </thead>
                     <tbody>
                     @foreach($tasks as $task)
                         <tr>
-                            <td class="table-text"><div>{{ $task->name }} </div></td>
+                            <td class="table-text">
+                                <div>
+                                    @if($task->status == -1)
+                                        <strike>{{ $task->name }}</strike>
+                                    @else
+                                        {{ $task->name }}
+                                    @endif
+                                </div>
+                            </td>
+                            <td class="table-text">
+                                <div>
+                                    @if($task->priority == 0)
+                                        Bình thường
+                                    @elseif($task->priority == 1)
+                                        Quan trọng
+                                    @elseif($task->priority == 2)
+                                        Khẩn cấp
+                                    @endif
+                                </div>
+                            </td>
                             <!-- Task Complete Button -->
                             <td>
-                                <a href="{{ url('frontend/task/complete/1') }}" type="submit" class="btn btn-success">
-                                    <i class="fa fa-btn fa-check"></i>Hoàn thành
-                                </a>
+                                @if($task->status == 1)
+                                    <form action="{{ route('task.complete', $task->id)  }}" method="POST" class="form-horizontal">
+                                        {{ csrf_field() }}
+                                        {{ method_field('PUT') }}
+                                        <button type="submit" class="btn btn-info">
+                                            <i class="fa fa-btn fa-check"></i>Đang làm
+                                        </button>
+                                    </form>
+                                @endif
+                                @if($task->status == 2)
+                                    <form action="{{ route('task.reComplete', $task->id)  }}" method="POST" class="form-horizontal">
+                                        {{ csrf_field() }}
+                                        {{ method_field('PUT') }}
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="fa fa-btn fa-check"></i>Hoàn thành
+                                        </button>
+                                    </form>
+                                @endif
+                                @if($task->status == -1)
+                                    <form action="{{ route('task.complete', $task->id)  }}" method="POST" class="form-horizontal">
+                                        {{ csrf_field() }}
+                                        {{ method_field('PUT') }}
+                                        <button type="submit" class="btn btn-warning">
+                                            <i class="fa fa-btn fa-check"></i>Làm lại
+                                        </button>
+                                    </form>
+                                @endif
                             </td>
                             <!-- Task Delete Button -->
                             <td>
